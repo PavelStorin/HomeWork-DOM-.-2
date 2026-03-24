@@ -1,0 +1,33 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7fb;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.menu {
+  display: flex;
+  gap: 10px;
+  background: white;
+  padding: 10px;
+  list-style-type: none;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.menu-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.menu-item:hover {
+  background: #f0f0f0;
+}
+
+.menu-item.active {
+  background: #1677ff;
+  color: white;
+}
