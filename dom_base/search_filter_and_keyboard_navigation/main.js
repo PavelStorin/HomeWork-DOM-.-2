@@ -1,26 +1,59 @@
 const input = document.getElementById("search");
 const items = document.querySelectorAll("#list li");
 
-
-input.addEventListener("keydown", (event) => {
 const arr = [...items];
 
-if (event.key === 'ArrowDown') {
+let currentIndex = -1;
+
+function updateActiveState() {
+
+    arr.forEach(li => li.classList.remove("active"));
     
+    if (currentIndex >= 0 && currentIndex < arr.length) {
+        const currentItem = arr[currentIndex];
+        currentItem.classList.add("active");
+        currentItem.focus();
+    }
 }
 
+function focusNext() {
+    if (currentIndex >= 0) arr[currentIndex].blur();
+
+    currentIndex = (currentIndex + 1) % arr.length;
+    arr[currentIndex].focus();
+    updateActiveState();
+}
+
+function focusPrev() {
+   if (currentIndex >= 0) arr[currentIndex].blur();
+
+    currentIndex = (currentIndex - 1 + arr.length) % arr.length;
+    arr[currentIndex].focus();
+    updateActiveState();
+}
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        focusNext();
+    }
+
+    else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        focusPrev();
+    }
 })
 
-document.addEventListener('keydown', (event) => {
+document.addEventListener('keydown', (e) => {
     
-    if (event.code === 'KeyK' && (event.ctrlKey || event.metaKey)) {
-        event.preventDefault();
+    if (e.code === 'KeyK' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
         input.focus();          
     }
 });
 
-input.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
+input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
 
         input.value = ''; 
         input.blur();
@@ -34,13 +67,15 @@ input.addEventListener('keydown', (event) => {
 
 input.addEventListener("input", () => {
 
+     currentIndex = -1;
+
     const value = input.value.toLowerCase()
 
     items.forEach(item => { 
         
      
         if (item.textContent.toLowerCase().includes(value)) {
-        item.style.display = "block";
+        item.style.display = "block";  
         }
 
         else {
